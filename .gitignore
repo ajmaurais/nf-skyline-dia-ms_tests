@@ -1,0 +1,8 @@
+.nextflow*
+*/results/*
+*/reports/*
+*/work/*
+mzml_cache/*
+panorama_cache/*
+*.log
+test_files/*
