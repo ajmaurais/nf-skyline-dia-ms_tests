@@ -24,9 +24,9 @@ done
 
 NEXTFLOW_RUN="${NEXTFLOW_RUN} $RESUME $STUB"
 
-STUB_DIRS=('local_mzML_diann' 'local_mzML_enc' 'local_mzML_enc_wide_only' 'pdc_diann' 'pdc_encyclopedia')
+TEST_DIRS=('local_mzML_diann' 'local_mzML_enc' 'local_mzML_enc_wide_only' 'pdc_diann' 'pdc_encyclopedia')
 
-for d in ${STUB_DIRS[@]} ; do
+for d in ${TEST_DIRS[@]} ; do
     pushd $d
     echo $NEXTFLOW_RUN
     $NEXTFLOW_RUN
