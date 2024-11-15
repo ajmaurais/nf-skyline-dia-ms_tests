@@ -1,4 +1,4 @@
-Replicate	cellLine	concentration
-Dora_10152022_DIA_HeLa_100pct_A02_27	HeLa	100
-Dora_10152022_DIA_HeLa_100pct_A03_36	HeLa	
-Dora_10152022_DIA_HeLa_100pct_A04_44	HeLa	100
+Replicate	cellLine	concentration	is_blank
+Dora_10152022_DIA_HeLa_100pct_A02_27	HeLa	100	FALSE
+Dora_10152022_DIA_HeLa_100pct_A03_36	HeLa		TRUE
+Dora_10152022_DIA_HeLa_100pct_A04_44	HeLa	100	FALSE
