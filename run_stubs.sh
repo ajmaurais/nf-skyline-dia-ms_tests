@@ -1,6 +1,6 @@
 
 NEXTFLOW_RUN='nextflow run /home/ajm/code/nf-teirex-dia/main.nf -profile standard -stub -resume -c pipeline.config'
-STUB_DIRS=('panorama_diann_libFree_stub' 'panorama_diann_stub' 'panorama_encyclopedia_skyline_stub' 'panorama_msconvert_only_stub')
+STUB_DIRS=('panorama_diann_libFree_stub' 'panorama_diann_stub' 'panorama_encyclopedia_skyline_stub' 'panorama_msconvert_only_stub' 'pdc_diann_stub' 'panorama_local_mix_stub')
 
 function usage() {
     echo "run_test_workflows.sh [--noResume] [stub_dir] [...]"
