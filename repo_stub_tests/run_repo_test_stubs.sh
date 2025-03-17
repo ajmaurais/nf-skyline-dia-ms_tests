@@ -41,7 +41,13 @@ NEXTFLOW_RUN="nextflow run ${REPO} -profile standard -c pipeline.config -stub ${
 if [ ${#arg_dirs[@]} -eq 0 ] ; then
     stub_dirs=()
     for f in ${CONFIG_FILES[@]} ; do
-        stub_dirs+=( repo_stub_tests/$(basename $f '.config') )
+        d="$(dirname $(realpath $0))/$(basename $f '.config')"
+        if [ ! -d $d ] ; then
+            mkdir -pv $d || exit 1
+            ln -vs $f $d/pipeline.config || exit 1
+            ln -vs $REPO/test-resources $d || exit 1
+        fi
+        stub_dirs+=( $d )
     done
 else
     stub_dirs=(${arg_dirs[@]})
@@ -51,13 +57,10 @@ declare -A exit_codes
 declare -A exit_code_count=(['success']=0 ['failure']=0)
 
 for d in ${stub_dirs[@]} ; do
-    if [ ! -d $d ] ; then
-        mkdir -pv $d || exit 1
-    fi
     pushd $d
     if [ $? -eq 0 ] ; then
         echo $NEXTFLOW_RUN
-        # $NEXTFLOW_RUN
+        $NEXTFLOW_RUN
         rc=$?
         popd
     else
@@ -71,16 +74,16 @@ for d in ${stub_dirs[@]} ; do
         ((exit_code_count['failure']++))
     fi
 done
-#
-# echo -e "\n${exit_code_count['success']} succeded, ${exit_code_count['failure']} failed"
-#
-# if [ ${exit_code_count['failure']} -gt 0 ] ; then
-#     echo
-#     for d in ${!exit_codes[@]} ; do
-#         if [ ${exit_codes["$d"]} -ne 0 ] ; then
-#             echo "Failure: $d, rc=${exit_codes["$d"]}"
-#         fi
-#     done
-#     echo
-# fi
-#
+
+echo -e "\n${exit_code_count['success']} succeded, ${exit_code_count['failure']} failed"
+
+if [ ${exit_code_count['failure']} -gt 0 ] ; then
+    echo
+    for d in ${!exit_codes[@]} ; do
+        if [ ${exit_codes["$d"]} -ne 0 ] ; then
+            echo "Failure: $d, rc=${exit_codes["$d"]}"
+        fi
+    done
+    echo
+fi
+
