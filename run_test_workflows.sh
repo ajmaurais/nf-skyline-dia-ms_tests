@@ -1,10 +1,10 @@
+#!/usr/bin/env bash
 
-REPO='/home/ajm/code/nf-teirex-dia/main.nf'
+REPO="$HOME/code/nf-skyline-dia-ms/main.nf"
 RESUME='-resume'
 STUB=''
 BRANCH=''
 TEST_DIRS=('local_mzML_diann' 'local_mzML_enc' 'local_mzML_enc_wide_only' 'pdc_diann' 'pdc_encyclopedia')
-NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config ${RESUME} ${STUB}"
 
 function usage() {
     echo "run_test_workflows.sh [--stub] [--noResume] [--repo <repository>] [--branch <branch>] [stub_dir] [...]"
@@ -47,6 +47,8 @@ while ! [[ -z "$1" ]] ; do
     esac
     shift
 done
+
+NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config ${RESUME} ${STUB}"
 
 if [ ${#arg_dirs[@]} -eq 0 ] ; then
     test_dirs=(${TEST_DIRS[@]})
