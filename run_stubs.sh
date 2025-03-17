@@ -1,17 +1,29 @@
+#!/usr/bin/env bash
 
-NEXTFLOW_RUN='nextflow run /home/ajm/code/nf-teirex-dia/main.nf -profile standard -stub -resume -c pipeline.config'
+REPO="$HOME/code/nf-skyline-dia-ms/main.nf"
+RESUME='-resume'
+BRANCH=''
+
 STUB_DIRS=('panorama_diann_libFree_stub' 'panorama_diann_stub' 'panorama_encyclopedia_skyline_stub' 'panorama_msconvert_only_stub' 'pdc_diann_stub' 'panorama_local_mix_stub')
 
 function usage() {
-    echo "run_test_workflows.sh [--noResume] [stub_dir] [...]"
+    echo "run_stubs.sh [--noResume] [--repo <repository>] [--branch <branch>] [stub_dir] [...]"
 }
 
 arg_dirs=()
 
-for i in "$@" ; do
+while ! [[ -z "$1" ]] ; do
     case $1 in
         -f|--noResume)
-            NEXTFLOW_RUN='nextflow run /home/ajm/code/nf-teirex-dia/main.nf -profile standard -stub -c pipeline.config'
+            RESUME=''
+        ;;
+        --repo)
+            shift
+            REPO="$1"
+        ;;
+        --branch)
+            shift
+            BRANCH="-r $1"
         ;;
         -h|--help)
             usage
@@ -32,6 +44,8 @@ for i in "$@" ; do
     esac
     shift
 done
+
+NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config -stub ${RESUME}"
 
 if [ ${#arg_dirs[@]} -eq 0 ] ; then
     stub_dirs=(${STUB_DIRS[@]})
