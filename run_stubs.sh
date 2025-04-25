@@ -4,7 +4,14 @@ REPO="$HOME/code/nf-skyline-dia-ms/main.nf"
 RESUME='-resume'
 BRANCH=''
 
-STUB_DIRS=('panorama_diann_libFree_stub' 'panorama_diann_stub' 'panorama_encyclopedia_skyline_stub' 'panorama_msconvert_only_stub' 'pdc_diann_stub' 'panorama_local_mix_stub')
+STUB_DIRS=('panorama_diann_libFree_stub' \
+           'panorama_diann_stub' \
+           'panorama_encyclopedia_skyline_stub' \
+           'panorama_msconvert_only_stub' \
+           'pdc_diann_stub' \
+           'pdc_bruker_d_diann_stub' \
+           'panorama_local_mix_stub' \
+           'panorama_multi_batch_diann_stub')
 
 function usage() {
     echo "run_stubs.sh [--noResume] [--repo <repository>] [--branch <branch>] [stub_dir] [...]"
@@ -45,7 +52,7 @@ while ! [[ -z "$1" ]] ; do
     shift
 done
 
-NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config -stub ${RESUME}"
+NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config -process.maxRetries 0 -stub ${RESUME}"
 
 if [ ${#arg_dirs[@]} -eq 0 ] ; then
     stub_dirs=(${STUB_DIRS[@]})

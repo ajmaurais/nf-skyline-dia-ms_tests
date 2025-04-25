@@ -48,7 +48,7 @@ while ! [[ -z "$1" ]] ; do
     shift
 done
 
-NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config ${RESUME} ${STUB}"
+NEXTFLOW_RUN="nextflow run ${REPO} ${BRANCH} -profile standard -c pipeline.config -process.maxRetries 0 ${RESUME} ${STUB}"
 
 if [ ${#arg_dirs[@]} -eq 0 ] ; then
     test_dirs=(${TEST_DIRS[@]})

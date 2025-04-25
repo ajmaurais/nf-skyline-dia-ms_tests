@@ -6,3 +6,4 @@ mzml_cache/*
 panorama_cache/*
 *.log
 repo_stub_tests/test-*
+temp/*
